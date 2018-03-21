@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.jar.Attributes;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -25,6 +26,8 @@ public class GameActivity extends AppCompatActivity {
     ArrayList<Integer> qID = new ArrayList<Integer>();//ตัวแปร qId เป็นตัวแปรชนิดอะเรย์แบบสุ่มคำถาม
     String answer;
     int score = 0;
+    String getNameString;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,18 +255,19 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (qID.isEmpty()) { //ถ้าทำครบทุกข้อ นั่นคือ qID เป็นค่าว่าง
-            dialogboxScore();// เรียก method dialogboxScore() สำหรับแสดงคะแนน
+            getNameString = getIntent().getStringExtra("Name");
+            dialogboxScore(getNameString);// เรียก method dialogboxScore() สำหรับแสดงคะแนน
         }else {//ถ้ายังทำไม่ครบทุกข้อ
             setQuestion(qID.remove(0));// เรียก medthod setQuestion() สำหรับแสดงคำถามถัดไป
         }
 
     }// end choiceAns Method
 
-    private void dialogboxScore() {//method สำหรับแสดงคะแนน
+    private void dialogboxScore(String name) {//method สำหรับแสดงคะแนน
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("สรุปคะแนน");
-        builder.setMessage("ได้คะแนน " + score+ " คะแนน")
+        builder.setMessage(name +"ได้คะแนน " + score+ " คะแนน")
             .setCancelable(false)
             .setPositiveButton("ออกจากเกม", new DialogInterface.OnClickListener() {
                 @Override
